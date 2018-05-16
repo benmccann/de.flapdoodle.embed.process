@@ -4,10 +4,10 @@
  *   Martin Jöhren <m.joehren@googlemail.com>
  *
  * with contributions from
- * 	konstantin-ba@github,
-	Archimedes Trajano (trajano@github),
-	Kevin D. Keck (kdkeck@github),
-	Ben McCann (benmccann@github)
+ *   konstantin-ba@github,
+ *   Archimedes Trajano (trajano@github),
+ *   Kevin D. Keck (kdkeck@github),
+ *   Ben McCann (benmccann@github)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -111,8 +111,6 @@ public class ProcessControl {
 			} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			}
 
-			closeIOAndDestroy();
-
 			try {
 				returnCode=task.get(900, TimeUnit.MILLISECONDS);
 				stopped=true;
@@ -120,10 +118,12 @@ public class ProcessControl {
 			}
 
 			try {
-				returnCode=task.get(2000, TimeUnit.MILLISECONDS);
+				returnCode=task.get(15000, TimeUnit.MILLISECONDS);
 				stopped=true;
 			} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			}
+
+			closeIOAndDestroy();
 
 			if (!stopped)	{
 //				logger.severe(""+runtime.getName()+" NOT exited, thats why we destroy");
